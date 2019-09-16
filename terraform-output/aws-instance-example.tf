@@ -1,8 +1,13 @@
 resource "aws_instance" "web-server" {
-   ami           = "${lookup(var.ami_id, var.region)}"
-   instance_type = "t2.micro"
- }
+  ami           = "${lookup(var.ami_id, var.region)}"
+  instance_type = "t2.micro"
 
-output "public_ip"{
-  value="${aws_instance.web-server.public_ip}"
+
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.web-server.private_ip} >> ip_list.txt"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.web-server.arn} >> arn.txt"
+  }
 }
