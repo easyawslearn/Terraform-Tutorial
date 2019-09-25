@@ -11,7 +11,6 @@ resource "aws_instance" "web" {
 # key name
 key_name = var.key_name
 
-
   tags = {
     Name = "Ec2-with-VPC"
   }
