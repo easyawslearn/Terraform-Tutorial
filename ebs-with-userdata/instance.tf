@@ -1,8 +1,7 @@
 provider "aws" {
-  region     = "${var.region}"
+  region     = var.region
   version    = "~> 2.0"
 }
-
 
 resource "aws_instance" "ebs_instance_example" {
   ami           = lookup(var.ami_id, var.region)
