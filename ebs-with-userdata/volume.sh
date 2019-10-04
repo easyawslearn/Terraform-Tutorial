@@ -5,4 +5,3 @@ sudo mkdir -p  /data
 sleep 30
 sudo mkfs.ext4 /dev/xvdh
 sudo mount /dev/xvdh /data
-sudo touch /data/aa.txt

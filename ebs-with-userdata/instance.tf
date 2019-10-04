@@ -13,9 +13,8 @@ resource "aws_instance" "ebs_instance_example" {
 
   # key name
   key_name = var.key_name
-
+  # User data passing through template rendering
   user_data = data.template_file.init.rendered
-
 
   tags = {
     Name = "EBS with userdata"
