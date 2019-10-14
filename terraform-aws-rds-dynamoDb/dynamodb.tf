@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
-  name           = "Example-Db"
+  name           = "DynamoDB-Terraform"
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
@@ -42,7 +42,7 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   }
 
   tags = {
-    Name        = "dynamodb-table-1"
-    Environment = "production"
+    Name        = "dynamodb-table"
+    Environment = "Training"
   }
 }
