@@ -31,5 +31,5 @@ resource "aws_instance" "rds_example" {
 
 
 output "public_ip" {
-  value = aws_instance.IP_example.public_ip
+  value = aws_instance.rds_example.public_ip
 }
