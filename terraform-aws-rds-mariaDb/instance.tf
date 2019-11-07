@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 
-resource "aws_instance" "IP_example" {
+resource "aws_instance" "rds_example" {
   ami           = lookup(var.ami_id, var.region)
   instance_type = var.instance_type
   subnet_id     = aws_subnet.public_1.id
@@ -31,5 +31,5 @@ resource "aws_instance" "IP_example" {
 
 
 output "public_ip" {
-  value = aws_instance.IP_example.public_ip
+  value = aws_instance.rds_example.public_ip
 }
