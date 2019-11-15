@@ -21,11 +21,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
     type = "S"
   }
 
-  attribute {
-    name = "TopScore"
-    type = "N"
-  }
-
   ttl {
     attribute_name = "TimeToExist"
     enabled        = false
@@ -33,8 +28,8 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
 
   global_secondary_index {
     name               = "UserTitleIndex"
-    hash_key           = "UserTitle"
-    range_key          = "TopScore"
+    hash_key           = "UserId"
+    range_key          = "Name"
     write_capacity     = 10
     read_capacity      = 10
     projection_type    = "INCLUDE"
