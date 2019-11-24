@@ -14,4 +14,4 @@ jobs:
         with:
           version: "0.11.14"
       - name: Build module 'aws-instance-first-script'
-        run: cd aws-instance-first-script && terraform init && terraform validate
+        run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan
