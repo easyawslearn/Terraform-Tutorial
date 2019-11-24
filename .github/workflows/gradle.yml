@@ -15,5 +15,7 @@ jobs:
           version: "0.11.14"
       - name: Build module 'aws-instance-first-script'
         run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan
+        continue-on-error: true
       - name: Build module 'ebs-with-userdata'
         run: cd ebs-with-userdata && terraform init && terraform validate && terraform plan
+        continue-on-error: true
