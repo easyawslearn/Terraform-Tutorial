@@ -1,5 +1,7 @@
 # aws-instance-first-script
+
 ![](https://github.com/easyawslearn/Terraform-Tutorial/workflows/terraform-tutorials-ci/badge.svg)
+
 A Terraform module for creating AWS EC2 instance.
 
 ## Usage
