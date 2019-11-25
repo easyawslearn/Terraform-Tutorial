@@ -16,7 +16,7 @@ jobs:
       - name: Set up Terraform
         uses: marocchino/setup-terraform@v1
         with:
-          version: "0.11.14"
+          version: "0.12.18"
       - name: Build module 'aws-instance-first-script'
         run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan
       - name: Build module 'aws-EC2-with-jenkins'
