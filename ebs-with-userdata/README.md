@@ -1,4 +1,4 @@
-# aws-instance-first-script
+# aws-instance-with-ebs-volume
 
 A Terraform module for creating AWS EC2 instance with userdata for creating EBS.
 
