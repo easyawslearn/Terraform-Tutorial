@@ -19,6 +19,12 @@ variable "device_name" {
   type    = "string"
   default = "/dev/xvdh"
 }
+
+variable "ebs_size" {
+  type    = "string"
+  default = "20"
+}
+
 variable "key_name" {
   type    = "string"
   default = "ec2-demo"
