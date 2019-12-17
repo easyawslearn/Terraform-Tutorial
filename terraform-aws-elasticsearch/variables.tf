@@ -1,18 +1,6 @@
 variable "region" {
   type    = "string"
-  default = "us-east-1"
-}
-
-variable "enabled" {
-  type        = bool
-  default     = true
-  description = "Set to false to prevent the module from creating any resources"
-}
-
-variable "security_group" {
-  type        = string
-  default     = "sg-53623a20"
-  description = "List of security group IDs to be allowed to connect to the cluster"
+  default = "us-east-2"
 }
 
 variable "domain_name" {
@@ -36,7 +24,7 @@ variable "instance_type" {
 variable "instance_count" {
   type        = number
   description = "Number of data nodes in the cluster"
-  default     = 2
+  default     = 1
 }
 
 variable "zone_awareness_enabled" {
