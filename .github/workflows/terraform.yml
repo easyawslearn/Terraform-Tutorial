@@ -18,6 +18,6 @@ jobs:
         with:
           version: "0.12.15"
       - name: Build module 'aws-instance-first-script'
-        run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan
+        run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan -out plan_terraform && terraform apply plan_terraform
       - name: Build module 'aws-EC2-with-jenkins'
         run: cd EC2withJenkins && terraform init && terraform validate && terraform plan
