@@ -1,4 +1,8 @@
   pipeline {
+    parameters {
+          string(defaultValue: 'vijaysnode', description: 'select node', name: 'node')
+  }
+
     agent {
         node {
                 label params.node
