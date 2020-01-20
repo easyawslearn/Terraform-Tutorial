@@ -16,14 +16,14 @@
                     {
                       git branch: 'tf-jenkins', url: 'https://github.com/easyawslearn/Terraform-Tutorial.git'
                       sh 'cd EC2withJenkins '
-                      sh './terraform init -upgrade=true -get=true -input=false -force-copy'
-                      sh './terraform workspace new "terraform-demo"'
+                      sh 'terraform init -upgrade=true -get=true -input=false -force-copy'
+                      sh 'terraform workspace new "terraform-demo"'
                       sh 'echo "INFO: New terraform-demo workspace added."'
-                      sh './terraform workspace select terraform-demo'
+                      sh 'terraform workspace select terraform-demo'
                       sh 'echo "INFO: Terraform -> Planning..."'
-                      sh './terraform plan -out plan_terraform -lock=true'
+                      sh 'terraform plan -out plan_terraform -lock=true'
                       sh 'echo "INFO: Terraform -> Executing..."'
-                      sh './terraform apply plan_plan_terraform'
+                      sh 'terraform apply plan_plan_terraform'
                     }
                   }
                 }
