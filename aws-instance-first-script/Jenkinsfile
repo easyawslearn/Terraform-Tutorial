@@ -1,8 +1,10 @@
   pipeline {
-    agent node {
-              label params.node
+    agent {
+        node {
+                label params.node
+        }
       }
-       stages{
+         stages{
            stage('terraform-Demo') {
                steps {
                  script {
