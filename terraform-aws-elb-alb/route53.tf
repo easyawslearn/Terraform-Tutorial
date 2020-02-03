@@ -10,8 +10,13 @@ resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.easy_aws.zone_id
   name    = "www.easyaws.in"
   type    = "A"
-  ttl     = "300"
-  records = [aws_lb.elb_example.dns_name]
+
+  alias {
+     name                   = aws_lb.elb_example.dns_name
+     zone_id                = aws_lb.elb_example.zone_id
+     evaluate_target_health = true
+   }
+
 }
 
 output "name_server"{
