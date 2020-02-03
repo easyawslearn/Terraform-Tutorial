@@ -18,6 +18,8 @@ jobs:
         with:
           version: "0.12.15"
       - name: Build module 'aws-instance-first-script'
-        run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan && terraform destroy
+        run: cd aws-instance-first-script && terraform init && terraform validate && terraform plan 
       - name: Build module 'aws-EC2-with-jenkins'
         run: cd EC2withJenkins && terraform init && terraform validate && terraform plan
+      - name: Build module 'aws-Application-Load-Balancer'
+        run: cd terraform-aws-elb-alb && terraform init && terraform validate && terraform plan
