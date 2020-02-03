@@ -1,0 +1,32 @@
+  pipeline {
+    parameters {
+          string(defaultValue: 'vijaysnode', description: 'select node', name: 'node')
+  }
+
+    agent {
+        node {
+                label params.node
+        }
+      }
+         stages{
+           stage('terraform-Demo') {
+               steps {
+                 script {
+                   dir("ta-setup")
+                    {
+                      git branch: 'tf-jenkins', url: 'https://github.com/easyawslearn/Terraform-Tutorial.git'
+                      sh 'cd EC2withJenkins '
+                      sh 'terraform init -upgrade=true -get=true -input=false -force-copy'
+                      sh 'terraform workspace new "terraform-demo"'
+                      sh 'echo "INFO: New terraform-demo workspace added."'
+                      sh 'terraform workspace select terraform-demo'
+                      sh 'echo "INFO: Terraform -> Planning..."'
+                      sh 'terraform plan -out plan_terraform -lock=true'
+                      sh 'echo "INFO: Terraform -> Executing..."'
+                      sh 'terraform apply plan_plan_terraform'
+                    }
+                  }
+                }
+              }
+          }
+        }
