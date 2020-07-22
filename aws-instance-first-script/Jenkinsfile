@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh 'pwd;cd terraform/aws-instance-first-script ; terraform init -input=false'
                 // sh 'terraform workspace new ${environment}'
-                sh 'terraform workspace select ${environment};pwd;ls'
+                sh 'pwd;cd terraform/aws-instance-first-script ;terraform workspace select ${environment};pwd;ls'
                 sh "pwd;cd terraform/aws-instance-first-script ;terraform plan -input=false -out tfplan ;pwd;ls"
                 sh 'pwd;cd terraform/aws-instance-first-script ;terraform show -no-color tfplan > tfplan.txt'
             }
