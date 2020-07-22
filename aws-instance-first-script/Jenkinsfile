@@ -32,7 +32,7 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd;ls ; terraform init -input=false'
+                sh 'pwd;cd terraform/aws-instance-first-script ; terraform init -input=false'
                 // sh 'terraform workspace new ${environment}'
                 sh 'terraform workspace select ${environment};pwd;ls'
                 sh "pwd;cd terraform/aws-instance-first-script ;terraform plan -input=false -out tfplan ;pwd;ls"
