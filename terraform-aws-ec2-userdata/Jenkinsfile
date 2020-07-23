@@ -36,17 +36,16 @@ pipeline {
                       -input=false \
                       -force-copy \
                       -backend=true \
-                      -backend-config "bucket='aws-terraform-devops-backend'" \
+                      -backend-config "bucket=aws-terraform-devops-backend" \
                       -backend-config "key=terraform/${SERVICE}.tfstate" \
                       -backend-config "region=us-east-1" \
                       -backend-config "dynamodb_table=terraform" \
                       -lock=true
-
-                    terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;
-                    echo "INFO: Terraform -> Working for "${environment name}
-                    terraform plan -input=false -out tfplan ;
-                    terraform show -no-color tfplan > tfplan.txt
                 '''
+                sh 'terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;'
+                sh 'echo "INFO: Terraform -> Working for "${environment name}';
+                sh 'terraform plan -input=false -out tfplan -lock=true'
+                sh 'terraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
