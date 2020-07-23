@@ -1,5 +1,5 @@
 resource "aws_security_group" "allow_ssh" {
-  name        = "allow_SSH"
+  name        = "apche-sg"
   description = "Allow SSH inbound traffic"
   #vpc_id      = aws_vpc.vpc_demo.id
 
