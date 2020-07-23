@@ -17,6 +17,7 @@ pipeline {
    agent  any
         options {
                 timestamps ()
+                ansiColor('xterm')
             }
     stages {
         stage('checkout') {
@@ -41,7 +42,8 @@ pipeline {
                       -backend-config "dynamodb_table=terraform" \
                       -lock=true
 
-                  terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;
+                    terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;
+                    echo "INFO: Terraform -> Working for "${environment name}
                     terraform plan -input=false -out tfplan ;
                     terraform show -no-color tfplan > tfplan.txt
                 '''
@@ -56,7 +58,7 @@ pipeline {
 
            steps {
                script {
-                    def plan = readFile 'terraform/aws-instance-first-script/tfplan.txt'
+                    def plan = readFile 'terraform-aws-ec2-userdata/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                }
@@ -65,7 +67,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "pwd;cd terraform/aws-instance-first-script ; terraform apply -input=false tfplan"
+                sh "cd terraform-aws-ec2-userdata ; terraform apply -input=false tfplan"
             }
         }
     }
