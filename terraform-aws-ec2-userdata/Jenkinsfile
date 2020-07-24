@@ -22,7 +22,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                  git "https://github.com/easyawslearn/Terraform-Tutorial.git"
+                  git branch: "devops1", url: "https://github.com/easyawslearn/Terraform-Tutorial.git"
                   }
             }
 
@@ -42,27 +42,30 @@ pipeline {
                       -backend-config "dynamodb_table=terraform" \
                       -lock=true
                 '''
-                sh 'cd terraform-aws-ec2-userdata ;terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;'
-              //  sh 'echo "INFO: Terraform -> Working for "${environment name}';
-               // sh 'terraform plan -input=false -out tfplan -lock=true'
-            //    sh 'terraform show -no-color tfplan > tfplan.txt'
+                sh """#!/bin/bash
+                cd terraform-aws-ec2-userdata ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
+                
+                cd terraform-aws-ec2-userdata ; echo "INFO: Terraform -> Working for ${environment}";
+                terraform plan -input=false -out tfplan -lock=true;
+                terraform show -no-color tfplan > tfplan.txt;
+                """
             }
         }
         stage('Approval') {
-           when {
-               not {
-                   equals expected: true, actual: params.autoApprove
-               }
-           }
+          when {
+              not {
+                  equals expected: true, actual: params.autoApprove
+              }
+          }
 
-           steps {
-               script {
+          steps {
+              script {
                     def plan = readFile 'terraform-aws-ec2-userdata/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-               }
-           }
-       }
+              }
+          }
+      }
 
         stage('Apply') {
             steps {
