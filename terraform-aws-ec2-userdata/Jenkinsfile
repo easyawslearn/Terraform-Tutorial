@@ -37,14 +37,14 @@ pipeline {
                       -force-copy \
                       -backend=true \
                       -backend-config "bucket=aws-terraform-devops-backend" \
-                      -backend-config "key=terraform/${SERVICE}.tfstate" \
+                      -backend-config "key=terraform/${service}.tfstate" \
                       -backend-config "region=us-east-1" \
                       -backend-config "dynamodb_table=terraform" \
                       -lock=true
                 '''
                 sh """#!/bin/bash
                 cd terraform-aws-ec2-userdata ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
-                
+
                 cd terraform-aws-ec2-userdata ; echo "INFO: Terraform -> Working for ${environment}";
                 terraform plan -input=false -out tfplan -lock=true;
                 terraform show -no-color tfplan > tfplan.txt;
