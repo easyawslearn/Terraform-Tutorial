@@ -90,7 +90,7 @@ pipeline {
           }
           stage('Destroy') {
               steps {
-                  sh "cd Devops-project1 ; terraform destroy -input=false tfplan"
+                  sh "cd Devops-project1 ; terraform plan -destroy -auto-approve "
               }
           }
     }
