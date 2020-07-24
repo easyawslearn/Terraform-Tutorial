@@ -42,10 +42,10 @@ pipeline {
                       -backend-config "dynamodb_table=terraform" \
                       -lock=true
                 '''
-                sh 'terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;'
-                sh 'echo "INFO: Terraform -> Working for "${environment name}';
-                sh 'terraform plan -input=false -out tfplan -lock=true'
-                sh 'terraform show -no-color tfplan > tfplan.txt'
+              //  sh 'terraform workspace show | grep -q ${environment} ; if [ $? == 0 ];then echo "workspace already exists";else terraform workspace new ${environment}; fi;'
+              //  sh 'echo "INFO: Terraform -> Working for "${environment name}';
+            //    sh 'terraform plan -input=false -out tfplan -lock=true'
+            //    sh 'terraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
