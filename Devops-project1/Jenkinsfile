@@ -34,7 +34,7 @@ pipeline {
                   terraform init \
                       -upgrade=true \
                       -get=true \
-                      -input=false \
+                      -input=true \
                       -force-copy \
                       -backend=true \
                       -backend-config "bucket=aws-terraform-devops-backend" \
