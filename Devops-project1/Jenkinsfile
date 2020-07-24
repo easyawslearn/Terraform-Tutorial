@@ -29,7 +29,7 @@ pipeline {
         stage('Plan') {
             steps {
                 sh '''
-                  cd terraform-aws-ec2-userdata ;
+                  cd Devops-project1 ;
                   terraform init \
                       -upgrade=true \
                       -get=true \
@@ -43,9 +43,9 @@ pipeline {
                       -lock=true
                 '''
                 sh """#!/bin/bash
-                cd terraform-aws-ec2-userdata ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
+                cd Devops-project1 ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
 
-                cd terraform-aws-ec2-userdata ; echo "INFO: Terraform -> Working for ${environment}";
+                cd Devops-project1 ; echo "INFO: Terraform -> Working for ${environment}";
                 terraform plan -input=false -out tfplan -lock=true;
                 terraform show -no-color tfplan > tfplan.txt;
                 """
@@ -60,7 +60,7 @@ pipeline {
 
           steps {
               script {
-                    def plan = readFile 'terraform-aws-ec2-userdata/tfplan.txt'
+                    def plan = readFile 'Devops-project1/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
               }
@@ -69,7 +69,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "cd terraform-aws-ec2-userdata ; terraform apply -input=false tfplan"
+                sh "cd Devops-project1 ; terraform apply -input=false tfplan"
             }
         }
     }
