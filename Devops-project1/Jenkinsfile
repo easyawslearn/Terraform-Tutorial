@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
-        string(name: 'region', defaultValue: 'us-east-1 ', description: 'select ')
+        string(name: 'region', defaultValue: 'us-east-1', description: 'select region to deployment')
         string(name: 'service', defaultValue: 'apache', description: 'please provide service name')
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
 
