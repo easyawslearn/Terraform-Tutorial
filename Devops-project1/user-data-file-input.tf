@@ -12,6 +12,6 @@ resource "aws_instance" "user_data_example_input_file" {
   user_data = "${file("apache_config.sh")}"
 
   tags = {
-    Name = "Ec2-User-data-with-file"
+    Name = "Apache"
   }
 }
