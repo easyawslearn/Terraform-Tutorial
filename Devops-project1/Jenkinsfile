@@ -71,7 +71,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "cd Devops-project1 ; terraform apply -input=false tfplan"
+                sh "cd Devops-project1 ; terraform apply -input=false tfplan -state-out=test"
             }
         }
         stage('Approval-Destroy') {
@@ -90,7 +90,7 @@ pipeline {
           }
           stage('Destroy') {
               steps {
-                  sh "cd Devops-project1 ; terraform plan -destroy "
+                  sh "cd Devops-project1 ; terraform destroy -state=test"
               }
           }
     }
