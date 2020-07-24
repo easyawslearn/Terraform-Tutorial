@@ -1,0 +1,77 @@
+
+pipeline {
+
+    parameters {
+        string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
+        string(name: 'service', defaultValue: 'apache', description: 'please provide service name')
+        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
+
+    }
+
+
+     environment {
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    }
+
+   agent  any
+        options {
+                timestamps ()
+                ansiColor('xterm')
+            }
+    stages {
+        stage('checkout') {
+            steps {
+                  git branch: "devops1", url: "https://github.com/easyawslearn/Terraform-Tutorial.git"
+                  }
+            }
+
+        stage('Plan') {
+            steps {
+                sh '''
+                  cd terraform-aws-ec2-userdata ;
+                  terraform init \
+                      -upgrade=true \
+                      -get=true \
+                      -input=false \
+                      -force-copy \
+                      -backend=true \
+                      -backend-config "bucket=aws-terraform-devops-backend" \
+                      -backend-config "key=terraform/${service}.tfstate" \
+                      -backend-config "region=us-east-1" \
+                      -backend-config "dynamodb_table=terraform" \
+                      -lock=true
+                '''
+                sh """#!/bin/bash
+                cd terraform-aws-ec2-userdata ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
+
+                cd terraform-aws-ec2-userdata ; echo "INFO: Terraform -> Working for ${environment}";
+                terraform plan -input=false -out tfplan -lock=true;
+                terraform show -no-color tfplan > tfplan.txt;
+                """
+            }
+        }
+        stage('Approval') {
+          when {
+              not {
+                  equals expected: true, actual: params.autoApprove
+              }
+          }
+
+          steps {
+              script {
+                    def plan = readFile 'terraform-aws-ec2-userdata/tfplan.txt'
+                    input message: "Do you want to apply the plan?",
+                    parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+              }
+          }
+      }
+
+        stage('Apply') {
+            steps {
+                sh "cd terraform-aws-ec2-userdata ; terraform apply -input=false tfplan"
+            }
+        }
+    }
+
+  }
