@@ -5,6 +5,7 @@ on: [push, pull_request]
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true  
 
 jobs:
   build:
