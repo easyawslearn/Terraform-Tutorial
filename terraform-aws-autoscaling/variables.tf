@@ -16,8 +16,22 @@ variable "key_name" {
   default = "ec2-demo"
 }
 
-
 variable "instance_type" {
   type    = "string"
   default = "t2.micro"
+}
+
+variable "subnets" {
+  type    = list(string)
+  default = ["subnet-59b98303","subnet-0d7cb232"]
+}
+
+variable "azs" {
+  type    = list(string)
+  default = ["us-east-1a","us-east-1b"]
+}
+
+variable "security_grpup_id" {
+  type    = "string"
+  default = "sg-53623a20"
 }
