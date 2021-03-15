@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sh '''
                   cd Devops-project1 ;
-                  terraform init \
+                  TF_LOG=DEBUG terraform init \
                       -upgrade=true \
                       -get=true \
                       -input=true \
