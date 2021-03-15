@@ -20,6 +20,12 @@ resource "aws_instance" "ec2_jenkins" {
     curl --silent --location http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo | sudo tee /etc/yum.repos.d/jenkins.repo
     sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
     yum install -y jenkins
+    yum install -y git
+
+    wget https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
+    unzip terraform_0.12.29_linux_amd64.zip
+    mv terraform /usr/bin
+
     systemctl start jenkins
     systemctl status jenkins
     systemctl enable jenkins
