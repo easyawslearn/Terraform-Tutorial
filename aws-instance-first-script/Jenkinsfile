@@ -30,6 +30,18 @@ pipeline {
                 }
             }
 
+        
+
+        stage('Hello') {
+            steps {
+                def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+                env.Path = "${tfHome};${env.Path}"
+                bat 'terraform --version'
+                echo 'Hello World'
+            }
+        }
+
+     
         stage('Plan') {
             steps {
                 sh 'pwd;cd terraform/aws-instance-first-script ; terraform init -input=false'
