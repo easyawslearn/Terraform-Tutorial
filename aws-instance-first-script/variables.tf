@@ -3,11 +3,11 @@ variable "region" {
 }
 
 variable "ami_id" {
-  type = "map"
+  type = map(string)
 
   default = {
-    us-east-1    = "ami-035b3c7efe6d061d5"
-    eu-west-2    = "ami-132b3c7efe6sdfdsfd"
-    eu-central-1 = "ami-9787h5h6nsn"
+    us-east-1    = "ami-0ed9277fb7eb570c9"
+    eu-west-2    = "ami-03af6a70ccd8cb578"
+    eu-central-1 = "ami-05d34d340fb1d89e5"
   }
 }
