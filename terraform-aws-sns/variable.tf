@@ -13,12 +13,12 @@ variable "sns_topic_policy_enabled" {
   default = true
 }
 
-variable "display_name" {
+variable "sns_display_name" {
   type    = string
   default = ""
 }
 
-variable "name" {
+variable "cloudwatch_event_rule_name" {
   type        = string
   default     = ""
   description = "Name  (e.g. `app` or `cluster`)."
@@ -44,7 +44,7 @@ variable "is_enabled" {
 
 variable "target_id" {
   type        = string
-  default     = ""
+  default     = "SendToSNS"
   description = "The Amazon Resource Name (ARN) associated with the role that is used for target invocation."
 }
 
@@ -73,7 +73,7 @@ variable "input_paths" {
 
 }
 
-variable "snsname" {
+variable "sns_name" {
   type        = string
   default     = ""
   description = "Name  (e.g. `app` or `cluster`)."

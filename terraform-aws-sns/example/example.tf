@@ -4,8 +4,9 @@ provider "aws" {
 
 module "sns_cloudwatch" {
   source = "../"
-  name        = "capture-aws-sign-in"
+  cloudwatch_event_rule_name        = "capture-aws-sign-in"
   description = "Capture each AWS Console Sign In"
-  target_id = "SendToSNS"
+  sns_name = "mysns"
+  sns_display_name = "demosns"
 }
 

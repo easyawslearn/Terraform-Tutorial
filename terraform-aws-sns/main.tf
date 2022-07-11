@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_cloudwatch_event_rule" "default" {
     count = var.enabled == true ? 1 : 0
 
-  name          = var.name
+  name          = var.cloudwatch_event_rule_name
   description   = var.description
   event_pattern = <<EOF
 {
@@ -30,8 +30,8 @@ resource "aws_cloudwatch_event_target" "default" {
 resource "aws_sns_topic" "this" {
   count = var.enabled ? 1 : 0
 
-  name                        = var.snsname
-  display_name                = var.display_name
+  name                        = var.sns_name
+  display_name                = var.sns_display_name
   kms_master_key_id           = var.kms_master_key_id
   delivery_policy             = var.delivery_policy
   fifo_topic                  = var.fifo_topic
