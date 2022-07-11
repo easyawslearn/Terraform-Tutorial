@@ -9,4 +9,3 @@ module "sns_cloudwatch" {
   sns_name = "mysns"
   sns_display_name = "demosns"
 }
-
