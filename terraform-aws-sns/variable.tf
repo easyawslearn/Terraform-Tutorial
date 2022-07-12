@@ -13,6 +13,16 @@ variable "sns_topic_policy_enabled" {
   default = true
 }
 
+variable "lambda_function_name" {
+  type = string
+  default = ""
+}
+
+variable "lambda_function_runtime" {
+  type = string
+  default = ""
+}
+
 variable "sns_display_name" {
   type    = string
   default = ""

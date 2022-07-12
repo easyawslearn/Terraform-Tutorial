@@ -8,4 +8,6 @@ module "sns_cloudwatch" {
   description = "Capture each AWS Console Sign In"
   sns_name = "mysns"
   sns_display_name = "demosns"
+  lambda_function_name = "S3cloudHub_Test_Lambda_Function"
+  lambda_function_runtime = "python3.8"
 }
