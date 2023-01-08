@@ -30,6 +30,7 @@ pipeline {
                 }
             }
 
+            
         stage('Plan') {
             steps {
                 sh 'pwd;cd terraform/aws-instance-first-script ; terraform init -input=false'
