@@ -1,6 +1,6 @@
 resource "aws_instance" "my_vm" {
   instance_type = "t2.micro"
-  ami           = "ami-0aa7d40eeae50c9a9" //Ubuntu AMI
+  ami           = "ami-0557a15b87f6559cf" //Ubuntu AMI
 
   tags = {
     Name = "ubuntu_server"
