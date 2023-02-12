@@ -1,6 +1,6 @@
 resource "aws_instance" "my_vm" {
   instance_type = "t2.micro"
-  ami           = "ami-0557a15b87f6559cf" //Ubuntu AMI
+  ami           = "${lookup(var.ami_id, var.region)}"
 
   tags = {
     Name = "ubuntu_server"
