@@ -27,7 +27,7 @@ jobs:
 
     - name: Run TFLint with error handling and visualization
       run: |
-        find . -name '*.tf' | xargs -n1 tflint --no-exit-code --format json > tflint-results.json
+        find . -name '*.tf' | xargs -n1 tflint --format json > tflint-results.json
         if [ $(jq '.issues | length' tflint-results.json) -gt 0 ]; then
           echo "TFLint found issues!"
           action-checkly --name "TFLint Results" --file tflint-results.json
