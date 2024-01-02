@@ -34,13 +34,11 @@ jobs:
           exit 1  # Fail the job
         fi
 
-    - uses: actions/github-script@v4
+    - name: Check Annotations
+      uses: yuzutech/annotations-action@v0.1.0
       with:
-        script: |  # Example of reporting issues as annotations
-          const output = require('fs').readFileSync('tflint-results.json');
-          const annotations = github.issues.createAnnotations({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-            body: output
-          });
+        repo-token: ${{ secrets.TF_LINT_PAT }}
+        input: tflint-results.json
+      
+
+
