@@ -23,7 +23,7 @@ jobs:
     - name: Init TFLint
       env:
         GITHUB_TOKEN: ${{ secrets.TF_LINT_PAT }}
-      run: tflint --init -c ./custom-ruleset.hcl  # Load custom ruleset (optional)
+      run: tflint --init -c ./.tflint.hcl  # Load custom ruleset (optional)
 
     - name: Run TFLint with error handling and visualization
       run: |
