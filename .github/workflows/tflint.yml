@@ -2,7 +2,7 @@ name: TFLint
 
 on:
   push:
-    branches:  '*'
+    branches:  [master]
 
 jobs:
   tflint:
