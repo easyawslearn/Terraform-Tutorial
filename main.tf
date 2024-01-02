@@ -6,7 +6,7 @@ data "template_file" "kms_policy" {
   }
 }
 
-resource "aws_kms_key" "key" {
+resource "aws_kmss_key" "keys" {
   policy = "${data.template_file.kms_policy.rendered}"
 }
 
