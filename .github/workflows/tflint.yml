@@ -33,12 +33,10 @@ jobs:
           action-checkly --name "TFLint Results" --file tflint-results.json
           exit 1  # Fail the job
         fi
-
-    - name: Check Annotations
-      uses: yuzutech/annotations-action@v0.1.0
+    
+    - name: Run TFLint with reviewdog
+      uses: reviewdog/action-tflint@v1
       with:
-        repo-token: ${{ secrets.TF_LINT_PAT }}
-        input: tflint-results.json
-      
-
+        github_token: ${{ secrets.TF_LINT_PAT }}
+        reporter: github-pr-review
 
