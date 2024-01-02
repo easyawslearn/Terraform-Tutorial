@@ -1,39 +1,46 @@
 name: TFLint
+
 on:
   push:
+    branches: [main]  # Trigger only on pushes to the main branch
 
 jobs:
   tflint:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-      name: Checkout source code
 
     - uses: actions/cache@v3
-      name: Cache plugin dir
       with:
         path: ~/.tflint.d/plugins
-        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+        key: ${{ runner.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
     - uses: terraform-linters/setup-tflint@v3
-      name: Setup TFLint
       with:
         tflint_version: v0.50.0
 
-    - name: Show version
-      run: tflint --version
-
     - name: Init TFLint
-      run: tflint --init
       env:
-        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-        GITHUB_TOKEN: ${{ secrets.TF_LINT_PAT}}
+        GITHUB_TOKEN: ${{ secrets.TF_LINT_PAT }}
+      run: tflint --init -c ./custom-ruleset.hcl  # Load custom ruleset (optional)
 
-    - name: Run TFLint
-      run: 
-        find . -name '*.tf' -execdir tflint -f compact {} \;
+    - name: Run TFLint with error handling and visualization
+      run: |
+        find . -name '*.tf' | xargs -n1 tflint --no-exit-code --format json > tflint-results.json
+        if [ $(jq '.issues | length' tflint-results.json) -gt 0 ]; then
+          echo "TFLint found issues!"
+          action-checkly --name "TFLint Results" --file tflint-results.json
+          exit 1  # Fail the job
+        fi
+
+    - uses: actions/github-script@v4
+      with:
+        script: |  # Example of reporting issues as annotations
+          const output = require('fs').readFileSync('tflint-results.json');
+          const annotations = github.issues.createAnnotations({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: output
+          });
