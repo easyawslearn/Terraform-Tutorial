@@ -2,7 +2,7 @@ name: TFLint
 
 on:
   push:
-    branches: [main]  # Trigger only on pushes to the main branch
+    branches:  '*'
 
 jobs:
   tflint:
